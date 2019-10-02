@@ -1,3 +1,12 @@
+### Sesstion là gì?
+- Một tập tin lưu lại dữ liệu của người dùng sử dụng website, được lưu ở server.
+- Mỗi session được tạo ra thì cần phải có một cookie tương ứng với nó để xác định xem session này được sử dụng cho trình duyệt nào. 
+
+### Cookie là gì?
+- Một tập tin lưu lại lịch sử duyệt web của người dùng
+- Lưu trên máy người dùng 
+
+
 ### JSX là gì?
 Là một cấu trúc ngữ pháp mở rộng của JavaScript, cú pháp rất giống với HTML.
 
@@ -26,4 +35,4 @@ helloWorld.text = 'Bye Bye React';
 ```
 
 ### ReactDOM
-- ReactDOM.render() dùng để nhúng React vào trong DOM
+- ReactDOM.render() dùng để nhúng React vào trong DOM                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
