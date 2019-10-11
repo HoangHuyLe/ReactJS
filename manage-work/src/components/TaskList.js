@@ -3,7 +3,59 @@ import TaskItem from './TaskItem';
 
 
 class TaskList extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            filterName : "",
+            filterStatus : -1 // all: -1, active: 1, deactive: 0
+        };        
+    }
+
+    onUpdateStatus = (id) =>{
+        this.props.onUpdateStatus(id);
+    }
+
+    onDelete = (id) =>{
+        this.props.onDelete(id);
+    }
+
+    onUpdate = (id) =>{
+        this.props.onUpdate(id);
+    }
+
+    onChange= (event) =>{
+        var name = event.target.name;
+        var value = event.target.value;        
+        
+        this.setState({
+            [name] : value
+        });
+
+        this.props.onFilter(
+            name === "filterName" ? value : this.state.filterName,
+            name === "filterStatus" ? value : this.state.filterStatus         
+           
+        )
+    }
+    
+
     render() {
+
+        var {tasks} = this.props;
+        
+        var elemTasks = tasks.map((task, index) => {             
+            return <TaskItem 
+                        key ={task.id} 
+                        index={index} 
+                        task={task} 
+                        onUpdateStatus = {this.onUpdateStatus}
+                        onDelete = {this.props.onDelete}
+                        onUpdate = { this.onUpdate}
+                    />
+        }
+        )
+
         return (
             <div>
                 <div className="row mt-20">
@@ -21,10 +73,21 @@ class TaskList extends React.Component {
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type='text' className='form-control' />
+                                        <input 
+                                            type='text' 
+                                            className='form-control'
+                                            name = "filterName" 
+                                            value = {(this.props.isShowList)?"" : this.state.filterName}
+                                            onChange = {this.onChange}
+                                        />
                                     </td>
                                     <td>
-                                        <select name="" className="form-control" >
+                                        <select
+                                            className="form-control"
+                                            name = "filterStatus"
+                                            value = {(this.props.isShowList)? -1 : this.state.filterStatus}
+                                            onChange = {this.onChange}
+                                        >
                                             <option value="-1">Tất cả</option>
                                             <option value="0">Ẩn</option>
                                             <option value="1">Kích hoạt</option>
@@ -32,7 +95,7 @@ class TaskList extends React.Component {
                                     </td>
                                     <td></td>
                                 </tr>
-                                <TaskItem/>
+                                {elemTasks}
                             </tbody>
                         </table>
                     </div>

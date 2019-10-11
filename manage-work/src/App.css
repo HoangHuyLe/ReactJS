@@ -24,3 +24,16 @@
 .mt-20{
   margin-top: 20px;
 }
+
+.ml-5{
+  margin-left: 1px;
+}
+
+.sort-selected ::after{
+  content: '\f00c';
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  margin: 0px 0px 0px 10px;
+  display: inline-block;
+}

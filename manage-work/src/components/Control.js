@@ -3,14 +3,16 @@ import Search from "./Search";
 import Sort from "./Sort";
 
 class Control extends React.Component {
+
+      onSort = (sortBy, sortValue) =>{
+            this.props.onSort(sortBy, sortValue)
+      }
       render() {
             return (
-                  <div>
-                        <button type="button" className="btn btn-primary">Thêm công việc</button>
-
+                  <div>                        
                         <div className="row mt-20">
-                              <Search/>
-                              <Sort/>                              
+                              <Search onSearch = {this.props.onSearch} onShowList = {this.props.onShowList}/>
+                              <Sort onSort= {this.onSort}/>                              
                         </div>
                   </div>
             )
