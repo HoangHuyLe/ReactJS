@@ -12,7 +12,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       //tasks: [], // id: unique, name, status
-      isDisplayForm: false,
       taskEditing: null,
       filter: {
         name: "",
@@ -33,72 +32,29 @@ class App extends React.Component {
 
   
   onDisplayForm = () => { // Them task
-    if (this.state.isDisplayForm && this.state.taskEditing !== null) {
-      this.setState({
-        isDisplayForm: true,
-        taskEditing: null
-      })
-    } else {
-      this.setState({
-        isDisplayForm: !this.state.isDisplayForm,
-        taskEditing: null
-      })
-    }
+    // if (this.state.isDisplayForm && this.state.taskEditing !== null) {
+    //   this.setState({
+    //     isDisplayForm: true,
+    //     taskEditing: null
+    //   })
+    // } else {
+    //   this.setState({
+    //     isDisplayForm: !this.state.isDisplayForm,
+    //     taskEditing: null
+    //   })
+    // }
+    
 
   }
 
-  onCloseForm = () => {
-    this.setState({
-      isDisplayForm: false
-    })
+  onToggleForm = () =>{
+    this.props.onToggleForm();
   }
 
   onShowForm = () => {
     this.setState({
       isDisplayForm: true
     })
-  }
-
-  onReceiveTask = (data) => {
-    var { tasks } = this.state;
-    if (data.id === '') {
-      // Them du lieu
-      data.id = this.generateID();
-      tasks.push(data);
-    } else {
-      // Chinh sua du lieu
-      let index = this.findIndex(data.id);
-      tasks[index] = data;
-    }
-    this.setState({
-      tasks: tasks,
-      taskEditing: null
-    });
-    this.onCloseForm()
-  }
-
-  onUpdateStatus = (id) => {
-    let index = this.findIndex(id);
-    let { tasks } = this.state;
-    if (index !== -1) {
-      tasks[index].status = !tasks[index].status;
-      this.setState({
-        tasks: tasks
-      })
-    }
-
-  }
-
-  findIndex = (id) => {
-    var { tasks } = this.state;
-    var result = -1;
-    tasks.forEach((task, index) => {
-      if (id === task.id) {
-        result = index
-        return result;
-      }
-    })
-    return result;
   }
 
   onDelete = (id) => {
@@ -166,8 +122,6 @@ class App extends React.Component {
 
     //let { tasks, sort } = this.state;
 
-    
-
     // Search
     // if ( this.state.nameSearch !== ""){      
     //   tasks = this.state.tasks.filter((task) => {
@@ -219,6 +173,8 @@ class App extends React.Component {
     //   }
     // }
 
+    var {isDisplayForm} = this.props;
+
     return (
 
       <div className="container">
@@ -230,23 +186,21 @@ class App extends React.Component {
         <div className="row">
 
           {/* left form */}
-          <div className={this.state.isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""}>
-            {this.state.isDisplayForm ? <TaskForm onCloseForm={this.onCloseForm} onReceiveTask={this.onReceiveTask} task={this.state.taskEditing} /> : ""}
+          <div className={isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""}>
+            {isDisplayForm ? <TaskForm task={this.state.taskEditing} /> : ""}
           </div>
 
           {/* right form */}
-          <div className={this.state.isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
-            <button type="button" className="btn btn-primary" onClick={this.onDisplayForm}>Thêm công việc</button>
+          <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
+            <button type="button" className="btn btn-primary" onClick={this.onToggleForm}>Thêm công việc</button>
             <button type="button" className="btn btn-warning ml-5" onClick={this.onGenerateTask}>Sinh Item</button>
             <Control 
               onSearch = {this.onSearch} 
               onShowList = {this.onShowList}
               onSort = {this.onSort}
             />
-            <TaskList
-              //tasks={tasks}              
+            <TaskList             
               isShowList = {this.state.isShowList}
-              onUpdateStatus={this.onUpdateStatus}
               onDelete={this.onDelete}
               onUpdate={this.onUpdate}
               onFilter={this.onFilter}
@@ -260,17 +214,21 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
   return {
-
+    isDisplayForm : state.isDisplayForm,
   }
+  
 }
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onGenTask : () =>{
+    onGenTask : () => {
       dispatch(actions.genTask())
-    }
+    },
+    onToggleForm : ()=> {
+      dispatch(actions.toggleForm())
+    },
   }
 }
 

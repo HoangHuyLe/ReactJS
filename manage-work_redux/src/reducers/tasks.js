@@ -26,6 +26,17 @@ var data = [
       }
 ];
 
+var findIndex = (id, tasks) => {      
+      var result = -1;
+      tasks.forEach((task, index) => {
+        if (id === task.id) {
+          result = index
+          return result;
+        }
+      })
+      return result;
+}
+
 var inintialState = [
 
 ];
@@ -45,6 +56,15 @@ var tasksReducer = (state = inintialState, action) => {
             case types.GEN_TASK:                 
                   state = data;
                   return state;
+            case types.UPDATE_STATUS_TASK:
+                  let index = findIndex(action.id, state);               
+                  if (index !== -1) {
+                        state[index] = {
+                              ...state[index],
+                              status : !state[index].status
+                        }
+                  }
+                  return [...state];
             default:
                   return state;
       }
@@ -52,3 +72,4 @@ var tasksReducer = (state = inintialState, action) => {
 }
 
 export default tasksReducer;
+
