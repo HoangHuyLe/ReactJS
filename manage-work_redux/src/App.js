@@ -57,29 +57,6 @@ class App extends React.Component {
     })
   }
 
-  onDelete = (id) => {
-    let index = this.findIndex(id);
-    let { tasks } = this.state;
-    if (index !== -1) {
-      tasks.splice(index, 1);
-      this.setState({
-        tasks: tasks
-      })
-    }
-
-  }
-
-  onUpdate = (id) => {
-    let index = this.findIndex(id);
-    let { tasks } = this.state;
-    let taskEditing = tasks[index];
-    this.setState({
-      taskEditing: taskEditing,
-    })
-
-    this.onShowForm();
-  }
-
   onFilter = (filterName, filterStatus) => {
     filterStatus = parseInt(filterStatus, 10);
     this.setState({
@@ -187,22 +164,20 @@ class App extends React.Component {
 
           {/* left form */}
           <div className={isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""}>
-            {isDisplayForm ? <TaskForm task={this.state.taskEditing} /> : ""}
+            <TaskForm task={this.state.taskEditing} />         
           </div>
 
           {/* right form */}
           <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
             <button type="button" className="btn btn-primary" onClick={this.onToggleForm}>Thêm công việc</button>
-            <button type="button" className="btn btn-warning ml-5" onClick={this.onGenerateTask}>Sinh Item</button>
+            <button type="button" className="btn btn-warning ml-5" onClick={this.onGenerateTask}>Sinh công việc</button>
             <Control 
               onSearch = {this.onSearch} 
               onShowList = {this.onShowList}
               onSort = {this.onSort}
             />
             <TaskList             
-              isShowList = {this.state.isShowList}
-              onDelete={this.onDelete}
-              onUpdate={this.onUpdate}
+              isShowList = {this.state.isShowList} 
               onFilter={this.onFilter}
             />
           </div>

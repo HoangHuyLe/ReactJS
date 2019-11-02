@@ -12,18 +12,6 @@ class TaskList extends React.Component {
         };
     }
 
-    onUpdateStatus = (id) => {
-        this.props.onUpdateStatus(id);
-    }
-
-    onDelete = (id) => {
-        this.props.onDelete(id);
-    }
-
-    onUpdate = (id) => {
-        this.props.onUpdate(id);
-    }
-
     onChange = (event) => {
         var name = event.target.name;
         var value = event.target.value;
@@ -48,10 +36,7 @@ class TaskList extends React.Component {
             return <TaskItem
                 key={task.id}
                 index={index}
-                task={task}
-                onUpdateStatus={this.onUpdateStatus}
-                onDelete={this.props.onDelete}
-                onUpdate={this.onUpdate}
+                task={task}                
             />
         })
 
