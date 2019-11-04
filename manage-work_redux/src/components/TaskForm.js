@@ -15,24 +15,28 @@ class TaskForm extends React.Component {
       }
 
       UNSAFE_componentWillMount = () => {            
-            if (this.props.task) {
+            if (this.props.itemEditting) {
                   this.setState({
-                        id : this.props.task.id,
-                        name : this.props.task.name,
-                        status : this.props.task.status,
+                        id : this.props.itemEditting.id,
+                        name : this.props.itemEditting.name,
+                        status : this.props.itemEditting.status,
                   })
+            }
+            else {
+                  this.setState(this.baseState)
             }
       }
 
       UNSAFE_componentWillReceiveProps(nextProps) {            
             if (nextProps){
-                  if(!nextProps.task){
+                  if(!nextProps.itemEditting){
                         this.setState(this.baseState)
+                        console.log(nextProps)
                   } else{
                         this.setState({
-                              id : nextProps.task.id,
-                              name : nextProps.task.name,
-                              status : nextProps.task.status,
+                              id : nextProps.itemEditting.id,
+                              name : nextProps.itemEditting.name,
+                              status : nextProps.itemEditting.status,
                         })
                   }
             }  
@@ -121,6 +125,7 @@ class TaskForm extends React.Component {
 const mapStateToProps = (state) =>{
       return {
             isDisplayForm : state.isDisplayForm,
+            itemEditting : state.itemEditting
       }
 }
 

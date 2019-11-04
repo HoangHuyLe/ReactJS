@@ -12,7 +12,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       //tasks: [], // id: unique, name, status
-      taskEditing: null,
       filter: {
         name: "",
         status: -1
@@ -164,7 +163,7 @@ class App extends React.Component {
 
           {/* left form */}
           <div className={isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""}>
-            <TaskForm task={this.state.taskEditing} />         
+            <TaskForm/>         
           </div>
 
           {/* right form */}
