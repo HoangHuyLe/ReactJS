@@ -16,11 +16,11 @@ class App extends React.Component {
         name: "",
         status: -1
       },
-      nameSearch : "",
-      isShowList : false,
-      sort : {
-        by : 'name', // Mắc định sắp xếp theo tên
-        value : 1 // 1: tăng dần, -1: giảm dần
+      nameSearch: "",
+      isShowList: false,
+      sort: {
+        by: 'name', // Mắc định sắp xếp theo tên
+        value: 1 // 1: tăng dần, -1: giảm dần
       }
     }
   }
@@ -29,31 +29,20 @@ class App extends React.Component {
     this.props.onGenTask()
   }
 
-  
-  onDisplayForm = () => { // Them task
-    // if (this.state.isDisplayForm && this.state.taskEditing !== null) {
-    //   this.setState({
-    //     isDisplayForm: true,
-    //     taskEditing: null
-    //   })
-    // } else {
-    //   this.setState({
-    //     isDisplayForm: !this.state.isDisplayForm,
-    //     taskEditing: null
-    //   })
-    // }
-    
-
-  }
-
-  onToggleForm = () =>{
-    this.props.onToggleForm();
-  }
-
-  onShowForm = () => {
-    this.setState({
-      isDisplayForm: true
-    })
+  onToggleForm = () => {
+    this.props.onClearTask(
+      {
+        id : '',
+        name : '',
+        status : false
+      }
+    );
+    if (this.props.itemEditting.id !== ''){
+      this.props.onOpenForm();
+    }
+    else {
+      this.props.onToggleForm();    
+    }
   }
 
   onFilter = (filterName, filterStatus) => {
@@ -61,17 +50,17 @@ class App extends React.Component {
     this.setState({
       filter: {
         name: filterName.toLowerCase(),
-        status: filterStatus,        
+        status: filterStatus,
       },
-      isShowList : false
+      isShowList: false
     })
-    
+
   }
 
-  onSearch = (nameSearch) => {    
+  onSearch = (nameSearch) => {
     this.setState({
-      nameSearch : nameSearch.toLowerCase(),
-      isShowList : false
+      nameSearch: nameSearch.toLowerCase(),
+      isShowList: false
     })
   }
 
@@ -79,17 +68,17 @@ class App extends React.Component {
     this.setState({
       filter: {
         name: "",
-        status: -1        
+        status: -1
       },
-      isShowList : true
+      isShowList: true
     })
   }
 
   onSort = (sortBy, sortValue) => {
     this.setState({
-      sort : {
-        by : sortBy,
-        value : sortValue
+      sort: {
+        by: sortBy,
+        value: sortValue
       }
     })
   }
@@ -149,7 +138,7 @@ class App extends React.Component {
     //   }
     // }
 
-    var {isDisplayForm} = this.props;
+    var { isDisplayForm } = this.props;
 
     return (
 
@@ -163,20 +152,20 @@ class App extends React.Component {
 
           {/* left form */}
           <div className={isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""}>
-            <TaskForm/>         
+            <TaskForm />
           </div>
 
           {/* right form */}
           <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
             <button type="button" className="btn btn-primary" onClick={this.onToggleForm}>Thêm công việc</button>
             <button type="button" className="btn btn-warning ml-5" onClick={this.onGenerateTask}>Sinh công việc</button>
-            <Control 
-              onSearch = {this.onSearch} 
-              onShowList = {this.onShowList}
-              onSort = {this.onSort}
+            <Control
+              onSearch={this.onSearch}
+              onShowList={this.onShowList}
+              onSort={this.onSort}
             />
-            <TaskList             
-              isShowList = {this.state.isShowList} 
+            <TaskList
+              isShowList={this.state.isShowList}
               onFilter={this.onFilter}
             />
           </div>
@@ -190,19 +179,26 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isDisplayForm : state.isDisplayForm,
+    isDisplayForm: state.isDisplayForm,
+    itemEditting : state.itemEditting
   }
-  
+
 }
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onGenTask : () => {
+    onGenTask: () => {
       dispatch(actions.genTask())
     },
-    onToggleForm : ()=> {
+    onToggleForm: () => {
       dispatch(actions.toggleForm())
     },
+    onClearTask: (task) => {
+      dispatch(actions.editTask(task))
+    },
+    onOpenForm: () =>{
+      dispatch(actions.openForm())
+    }
   }
 }
 

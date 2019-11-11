@@ -9,13 +9,12 @@ class TaskForm extends React.Component {
             this.state = {
                   id : '',
                   name: '',
-                  status: true
+                  status: false
             }
-            this.baseState = this.state
       }
 
-      UNSAFE_componentWillMount = () => {            
-            if (this.props.itemEditting) {
+      UNSAFE_componentWillMount = () => {                        
+            if (this.props.itemEditting.id !== '') {
                   this.setState({
                         id : this.props.itemEditting.id,
                         name : this.props.itemEditting.name,
@@ -23,15 +22,14 @@ class TaskForm extends React.Component {
                   })
             }
             else {
-                  this.setState(this.baseState)
+                  this.reset();
             }
       }
 
-      UNSAFE_componentWillReceiveProps(nextProps) {            
-            if (nextProps){
+      UNSAFE_componentWillReceiveProps(nextProps) {   
+            if (nextProps){                  
                   if(!nextProps.itemEditting){
-                        this.setState(this.baseState)
-                        console.log(nextProps)
+                        this.reset()
                   } else{
                         this.setState({
                               id : nextProps.itemEditting.id,
@@ -43,7 +41,10 @@ class TaskForm extends React.Component {
       }
 
       reset = () => {
-            this.setState(this.baseState)
+            this.setState({                 
+                  name : '',
+                  status : false
+            })            
       }
 
       onCloseForm = () => {
@@ -66,14 +67,14 @@ class TaskForm extends React.Component {
             });
       }
 
-      onSubmit = (data) => {
-            data.preventDefault();
-            this.props.onAddTask(this.state);
+      onSave = (event) => {
+            event.preventDefault();
+            this.props.onSaveTask(this.state);
             this.reset();
+            this.props.onCloseForm();
       }
 
-      render() {
-            var {id} = this.state;            
+      render() {                
             if (!this.props.isDisplayForm) return "";
             return (
 
@@ -81,13 +82,13 @@ class TaskForm extends React.Component {
                         <div className="panel-heading">
 
                               <h3 className="panel-title">
-                                    {(id === '') ? "Thêm công việc" : "Cập nhật công việc" }
+                                    {(this.state.id === '') ? "Thêm công việc" : "Cập nhật công việc" }
                                     <span onClick={this.onCloseForm}><i className="far fa-window-close" style={{ float: 'right' }}></i></span>
                               </h3>
 
                         </div>
                         <div className="panel-body">
-                              <form id="formTask" onSubmit={this.onSubmit}>
+                              <form id="formTask" onSubmit={this.onSave}>
                                     <div className="form-group">
                                           <label>Tên: </label>
                                           <input
@@ -131,8 +132,8 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch, props) => {
       return {
-            onAddTask : (task) => {
-                  dispatch(actions.addTask(task))                  
+            onSaveTask : (task) => {
+                  dispatch(actions.saveTask(task))                  
             },
             onCloseForm : ()=>{
                   dispatch(actions.closeForm());
@@ -141,3 +142,4 @@ const mapDispatchToProps = (dispatch, props) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
+

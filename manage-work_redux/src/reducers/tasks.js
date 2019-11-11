@@ -46,13 +46,23 @@ var tasksReducer = (state = inintialState, action) => {
       switch (action.type) {
             case types.LIST_ALL:
                   return state;
-            case types.ADD_TASK:
-                  var newTask = {
-                        id: generateID(),
+            case types.SAVE_TASK:
+                  // 2 case: Add task and Editting task                  
+                  var task = {
+                        id: action.task.id,
                         name: action.task.name,
-                        status: action.task.status === true ? true : false
+                        status: action.task.status
                   }
-                  state.push(newTask);
+                  // case Add task
+                  if(task.id === ''){
+                        task.id = generateID();
+                        state.push(task);
+                  }
+                  // case Editting
+                  else {
+                        index = findIndex(task.id, state);
+                        state[index] = task;
+                  }
                   return [...state];
             case types.GEN_TASK:
                   state = data;
@@ -79,16 +89,3 @@ var tasksReducer = (state = inintialState, action) => {
 }
 
 export default tasksReducer;
-
-
-
-  // onUpdate = (id) => {
-  //   let index = this.findIndex(id);
-  //   let { tasks } = this.state;
-  //   let taskEditing = tasks[index];
-  //   this.setState({
-  //     taskEditing: taskEditing,
-  //   })
-
-  //   this.onShowForm();
-  // }
