@@ -8,23 +8,6 @@ import { connect } from 'react-redux';
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      //tasks: [], // id: unique, name, status
-      filter: {
-        name: "",
-        status: -1
-      },
-      nameSearch: "",
-      isShowList: false,
-      sort: {
-        by: 'name', // Mắc định sắp xếp theo tên
-        value: 1 // 1: tăng dần, -1: giảm dần
-      }
-    }
-  }
-
   onGenerateTask = () => {
     this.props.onGenTask()
   }
@@ -45,99 +28,8 @@ class App extends React.Component {
     }
   }
 
-  onFilter = (filterName, filterStatus) => {
-    filterStatus = parseInt(filterStatus, 10);
-    this.setState({
-      filter: {
-        name: filterName.toLowerCase(),
-        status: filterStatus,
-      },
-      isShowList: false
-    })
-
-  }
-
-  onSearch = (nameSearch) => {
-    this.setState({
-      nameSearch: nameSearch.toLowerCase(),
-      isShowList: false
-    })
-  }
-
-  onShowList = () => {
-    this.setState({
-      filter: {
-        name: "",
-        status: -1
-      },
-      isShowList: true
-    })
-  }
-
-  onSort = (sortBy, sortValue) => {
-    this.setState({
-      sort: {
-        by: sortBy,
-        value: sortValue
-      }
-    })
-  }
-
   render() {
-
-    //let { tasks, sort } = this.state;
-
-    // Search
-    // if ( this.state.nameSearch !== ""){      
-    //   tasks = this.state.tasks.filter((task) => {
-    //     return task.name.toLowerCase().indexOf(this.state.nameSearch) !== -1; // hàm indexOf sẽ trả về -1 nếu không tìm thấy
-    //   })
-    // }
-
-    // // Show list after search
-    // if ( this.state.isShowList ){
-    //   tasks = this.state.tasks
-    // }
-
-    // Filter
-    // if (this.state.filter) {
-    //   if (this.state.filter.name) {
-    //     tasks = this.state.tasks.filter((task) => {
-    //       return task.name.toLowerCase().indexOf(this.state.filter.name) !== -1; // hàm indexOf sẽ trả về -1 nếu không tìm thấy
-    //     })
-    //   };
-    //   tasks = tasks.filter((task) => {
-    //     if (this.state.filter.status === - 1) {
-    //       return true // trả về mọi task được truyền vào
-    //     }
-    //     else {
-    //       return (task.status ? 1 : 0) === this.state.filter.status;
-    //     }
-    //   })
-
-    // }
-
-    // Sort
-    // if (sort.by === 'name'){
-    //   tasks.sort((a,b)=>{
-    //     if (a.name > b.name) {
-    //       return sort.value
-    //     }
-    //     else if (a.name < b.name) return -sort.value;
-    //     else return 0;
-    //   })
-    // } else {
-    //   if (sort.by === 'status'){
-    //     tasks.sort((a,b)=>{
-    //       if (a.status > b.status) {
-    //         return -sort.value
-    //       }
-    //       else if (a.status < b.status) return sort.value;
-    //       else return 0;
-    //     })
-    //   }
-    // }
-
+    
     var { isDisplayForm } = this.props;
 
     return (
@@ -159,15 +51,8 @@ class App extends React.Component {
           <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
             <button type="button" className="btn btn-primary" onClick={this.onToggleForm}>Thêm công việc</button>
             <button type="button" className="btn btn-warning ml-5" onClick={this.onGenerateTask}>Sinh công việc</button>
-            <Control
-              onSearch={this.onSearch}
-              onShowList={this.onShowList}
-              onSort={this.onSort}
-            />
-            <TaskList
-              isShowList={this.state.isShowList}
-              onFilter={this.onFilter}
-            />
+            <Control/>
+            <TaskList/>
           </div>
 
         </div>

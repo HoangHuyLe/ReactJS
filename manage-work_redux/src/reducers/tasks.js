@@ -23,6 +23,16 @@ var data = [
             id: generateID(),
             name: 'Hoc CSS',
             status: false,
+      },
+      {
+            id: generateID(),
+            name: 'Thuc hanh HTML',
+            status: false,
+      },
+      {
+            id: generateID(),
+            name: 'Thuc hanh CSS',
+            status: true,
       }
 ];
 

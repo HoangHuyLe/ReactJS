@@ -9,7 +9,7 @@ class TaskList extends React.Component {
         super(props);
         this.state = {
             filterName: "",
-            filterStatus: -1 // all: -1, active: 1, deactive: 0
+            filterStatus: -1, // all: -1, active: 1, deactive: 0
         };
     }
 
@@ -17,43 +17,77 @@ class TaskList extends React.Component {
         var name = event.target.name;
         var value = event.target.value;
         var filter = {
-            name : name === "filterName" ? value : this.state.filterName,
-            status : name === "filterStatus" ? value : this.state.filterStatus
+            name: name === "filterName" ? value.toLowerCase() : this.state.filterName,
+            status: name === "filterStatus" ? value : this.state.filterStatus
         }
         this.props.onFilterTable(filter);
 
         this.setState({
             [name]: value
         });
+        this.props.onShowList(false);
     }
-
-    // Filter
-    // if (this.state.filter) {
-    //   if (this.state.filter.name) {
-    //     tasks = this.state.tasks.filter((task) => {
-    //       return task.name.toLowerCase().indexOf(this.state.filter.name) !== -1; // hàm indexOf sẽ trả về -1 nếu không tìm thấy
-    //     })
-    //   };
-    //   tasks = tasks.filter((task) => {
-    //     if (this.state.filter.status === - 1) {
-    //       return true // trả về mọi task được truyền vào
-    //     }
-    //     else {
-    //       return (task.status ? 1 : 0) === this.state.filter.status;
-    //     }
-    //   })
-
-    // }
 
     render() {
 
-        var {tasks,filterTable} = this.props;
+        var { tasks, filterTable, searchTask, isShowList, sort } = this.props;
+
+        // Search
+        if (searchTask !== "") {
+            tasks = tasks.filter((task) => {
+                return task.name.toLowerCase().indexOf(searchTask.toLowerCase()) !== -1; // hàm indexOf sẽ trả về -1 nếu không tìm thấy
+            })
+        }
+
+
+        // Filter on table
+        if (filterTable) {
+            if (filterTable.name) {
+                tasks = tasks.filter((task) => {
+                    return task.name.toLowerCase().indexOf(filterTable.name) !== -1; // hàm indexOf sẽ trả về -1 nếu không tìm thấy
+                })
+            };
+            tasks = tasks.filter((task) => {
+                if (filterTable.status === - 1) {
+                    return true // trả về mọi task được truyền vào
+                }
+                else {
+                    return (task.status ? 1 : 0) === filterTable.status;
+                }
+            })
+        }
+
+        // Sort
+        if (sort.by === 'name') {
+            tasks.sort((a, b) => {
+                if (a.name > b.name) {
+                    return sort.value
+                }
+                else if (a.name < b.name) return -sort.value;
+                else return 0;
+            })
+        } else {
+            if (sort.by === 'status') {
+                tasks.sort((a, b) => {
+                    if (a.status > b.status) {
+                        return -sort.value
+                    }
+                    else if (a.status < b.status) return sort.value;
+                    else return 0;
+                })
+            }
+        }
+
+        // Show list
+        if (isShowList) {
+            tasks = this.props.tasks;
+        }
 
         var elemTasks = tasks.map((task, index) => {
             return <TaskItem
                 key={task.id}
                 index={index}
-                task={task}                
+                task={task}
             />
         })
 
@@ -109,16 +143,22 @@ class TaskList extends React.Component {
 const mapStatetoProps = (state) => {
     return {
         tasks: state.tasks,
-        filterTable : state.filterTable
+        filterTable: state.filterTable,
+        searchTask: state.searchTask,
+        isShowList: state.showList,
+        sort: state.sort
     }
 };
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onFilterTable : (filter)=> {
+        onFilterTable: (filter) => {
             dispatch(actions.filterTask(filter))
+        },
+        onShowList: (value) => {
+            dispatch(actions.showList(value))
         }
     }
-  }
+}
 
 export default connect(mapStatetoProps, mapDispatchToProps)(TaskList);

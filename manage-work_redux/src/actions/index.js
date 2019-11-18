@@ -65,3 +65,25 @@ export const filterTask = (filter) =>{
             filter : filter// filter : filterName + filterStatus
       }
 }
+
+export const searchTask = (keyword) =>{
+      return {
+            type : types.SEARCH_TASK,
+            keyword// filter : filterName + filterStatus
+      }
+}
+
+export const showList = (value) =>{
+      return {
+            type : types.SHOW_LIST,
+            value // value: true or false         
+      }
+}
+
+export const sortTask = (sort) =>{
+      return {
+            type : types.SORT,
+            sort // sort = sort.by + sort.value        
+      }
+}
+
