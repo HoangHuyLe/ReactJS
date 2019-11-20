@@ -1,10 +1,9 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import Header from "./components/Header"
-import Products from './components/Products';
-import Cart from "./components/Cart";
 import Footer from "./components/Footer";
 import Message from './components/Message';
+import ProductsContainer from './containers/ProductsContainer';
+import CartContainer from './containers/CartContainer';
 
 class App extends Component {
     render() {
@@ -12,10 +11,10 @@ class App extends Component {
             <div>
                 <Header />
                 <main id="mainContainer">
-                    <div class="container">
-                        <Products />
+                    <div className="container">
+                        <ProductsContainer />
                         <Message />
-                        <Cart />
+                        <CartContainer />
                     </div>
                 </main>
                 <Footer />

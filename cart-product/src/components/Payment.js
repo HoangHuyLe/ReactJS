@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 
 class Payment extends Component {
     render() {
+        var { cart } = this.props;
+
         return (
             <tr>
                 <td colSpan="3"></td>
@@ -13,7 +15,7 @@ class Payment extends Component {
                 </td>
                 <td>
                     <h4>
-                        <strong>15$</strong>
+                        <strong>{this.showPayment(cart)} VND</strong>
                     </h4>
                 </td>
                 <td colSpan="3">
@@ -23,6 +25,14 @@ class Payment extends Component {
                 </td>
             </tr>
         )
+    }
+
+    showPayment = (cart) => {
+        var total = 0;
+        for (var i = 0; i < cart.length; i++) {
+            total += cart[i].quantity * cart[i].product.price;
+        }
+        return total;
     }
 
 }
