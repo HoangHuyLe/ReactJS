@@ -5,8 +5,9 @@ import Cart from './../components/Cart';
 import * as Message from './../constants/Message';
 import CartItem from '../components/CartItem';
 import Payment from '../components/Payment';
+import {actDeleteProductInCart} from './../actions/index';
 
-class CartContainer extends Component {    
+class CartContainer extends Component {
     render() {
         var { cart } = this.props;
         return (
@@ -17,24 +18,26 @@ class CartContainer extends Component {
         )
     }
 
-    showCartItem = (cart) =>{
+    showCartItem = (cart) => {
         var result = <tr><th>{Message.MSG_CART_EMPTY}</th></tr>;
-        if (cart.length > 0){
-            result = cart.map((item, index)=>{
+        var {onDeleteProductInCart} = this.props;
+        if (cart.length > 0) {
+            result = cart.map((item, index) => {
                 return (
                     <CartItem
-                        key = {index}
-                        item = {item}                        
+                        key={index}
+                        item={item}
+                        onDeleteProductInCart = {onDeleteProductInCart}
                     />
                 )
             })
         }
         return result;
-    } 
-   
-    showPayment = (cart) =>{
-        if(cart.length > 0){
-            return <Payment cart={cart}/>
+    }
+
+    showPayment = (cart) => {
+        if (cart.length > 0) {
+            return <Payment cart={cart} />
         }
         return null;
     }
@@ -42,18 +45,19 @@ class CartContainer extends Component {
 
 CartContainer.propTypes = {
     cart: PropTypes.arrayOf(PropTypes.shape({
-        product : PropTypes.shape({
+        product: PropTypes.shape({
             id: PropTypes.number.isRequired,
-            name : PropTypes.string.isRequired,
-            image : PropTypes.string.isRequired,
-            description : PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            image: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
             price: PropTypes.number.isRequired,
             inventory: PropTypes.number.isRequired,
-            rating : PropTypes.number.isRequired
+            rating: PropTypes.number.isRequired
         }),
-        quantity : PropTypes.number.isRequired
-    })       
-    ).isRequired // Bat buoc phai có
+        quantity: PropTypes.number.isRequired
+    })
+    ).isRequired ,    
+    onDeleteProductInCart  : PropTypes.func
 }
 
 const mapStateToProps = state => {
@@ -62,4 +66,12 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(CartContainer);
+const mapDispatchToProps = (dispatch, props) =>{
+    return {
+        onDeleteProductInCart : (productId) =>{
+            dispatch(actDeleteProductInCart(productId))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartContainer);

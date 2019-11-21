@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class CartItem extends Component{
     render(){
         var {item} = this.props;
-
+        
         return (
             <tr>
             <th scope="row">
@@ -32,7 +32,7 @@ class CartItem extends Component{
             <td>{this.evalTotal(item.quantity, item.product.price)} </td>
             <td>
                 <button type="button" className="btn btn-sm btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top"
-                    title="" data-original-title="Remove item">
+                    title="" data-original-title="Remove item" onClick = {() => this.onDeleteProduct(item.product.id)}>
                     X
                 </button>
             </td>
@@ -43,6 +43,10 @@ class CartItem extends Component{
 
     evalTotal= (quantity, price) =>{
         return (quantity * price);
+    }
+
+    onDeleteProduct = (productId) => {
+        this.props.onDeleteProductInCart(productId);
     }
 }
 

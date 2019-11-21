@@ -15,21 +15,21 @@ class App extends React.Component {
   onToggleForm = () => {
     this.props.onClearTask(
       {
-        id : '',
-        name : '',
-        status : false
+        id: '',
+        name: '',
+        status: false
       }
     );
-    if (this.props.itemEditting.id !== ''){
+    if (this.props.itemEditting.id !== '') {
       this.props.onOpenForm();
     }
     else {
-      this.props.onToggleForm();    
+      this.props.onToggleForm();
     }
   }
 
   render() {
-    
+
     var { isDisplayForm } = this.props;
 
     return (
@@ -51,8 +51,8 @@ class App extends React.Component {
           <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
             <button type="button" className="btn btn-primary" onClick={this.onToggleForm}>Thêm công việc</button>
             <button type="button" className="btn btn-warning ml-5" onClick={this.onGenerateTask}>Sinh công việc</button>
-            <Control/>
-            <TaskList/>
+            <Control />
+            <TaskList />
           </div>
 
         </div>
@@ -65,7 +65,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isDisplayForm: state.isDisplayForm,
-    itemEditting : state.itemEditting
+    itemEditting: state.itemEditting
   }
 
 }
@@ -81,7 +81,7 @@ const mapDispatchToProps = (dispatch, props) => {
     onClearTask: (task) => {
       dispatch(actions.editTask(task))
     },
-    onOpenForm: () =>{
+    onOpenForm: () => {
       dispatch(actions.openForm())
     }
   }

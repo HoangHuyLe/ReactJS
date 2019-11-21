@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
+import * as Message from './../constants/Message';
 
 class Product extends Component {
 
@@ -61,7 +62,8 @@ class Product extends Component {
     }
 
     onAddToCart(product){
-        this.props.onAddToCart(product);        
+        this.props.onAddToCart(product);  
+        this.props.onChangeMessage(Message.MSG_ADD_TO_CART_SUCCESS);      
     }
 
 }

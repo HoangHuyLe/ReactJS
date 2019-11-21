@@ -9,6 +9,9 @@ const card = (state = initialState, action) => {
             case types.ADD_TO_CARD:
                   state = addToCart(state, action.product);                           
                   return [...state];
+            case types.DELETE_PRODUCT_IN_CART:
+                  state = deleteProduct(state, action.productId);
+                  return [...state];
             default:
                   return [...state];
       }
@@ -27,5 +30,13 @@ var addToCart = (cart, product) =>{
       return cart;
 }
 
+var deleteProduct = (cart, productId) => {
+      for (var i = 0; i < cart.length; i++){            
+            if(productId === cart[i].product.id){
+                  cart.splice(i,1);
+                  return cart;
+            }
+      }
+}
 
 export default card;
