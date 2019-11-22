@@ -20,12 +20,14 @@ class CartItem extends Component{
             <td className="center-on-small-only">
                 <span className="qty">{item.quantity} </span>
                 <div className="btn-group radio-group" data-toggle="buttons">
-                    <label className="btn btn-sm btn-primary
-                        btn-rounded waves-effect waves-light">
+                    <label className="btn btn-sm btn-primary btn-rounded waves-effect waves-light"
+                            onClick = {()=>this.onUpdateCart(item.product.id, item.quantity - 1)}
+                    >
                         <a href="/#">—</a>
                     </label>
-                    <label className="btn btn-sm btn-primary
-                        btn-rounded waves-effect waves-light">
+                    <label className="btn btn-sm btn-primary btn-rounded waves-effect waves-light"
+                            onClick = {()=>this.onUpdateCart(item.product.id, item.quantity + 1)}
+                    >
                         <a href="/#">+</a>
                     </label>
                 </div>
@@ -49,7 +51,11 @@ class CartItem extends Component{
     onDeleteProduct = (productId) => {
         this.props.onDeleteProductInCart(productId);
         this.props.onChangeMessage(Message.MSG_DELETE_PRODUCT_IN_CART_SUCCESS);
-        console.log(this.props.onChangeMessage);
+    }
+
+    onUpdateCart = (productId, quantityUpdate) => {
+        this.props.onUpdateProductInCart(productId, quantityUpdate);
+        this.props.onChangeMessage(Message.MSG_UPDATE_CART_SUCCESS);
     }
 }
 
