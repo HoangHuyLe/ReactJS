@@ -1,0 +1,40 @@
+import React from 'react';
+import ProductList from '../../components/ProductList/ProductList';
+import ProductItem from '../../components/ProductItem/ProductItem';
+
+class ProductListPage extends React.Component {
+    render() {
+        var products = [];
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <button type="button" className="btn btn-info">Thêm sản phẩm</button>
+                        <ProductList>
+                            {this.showProducts(products)}
+                        </ProductList>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    showProducts(products) {
+        let result = null;
+        if (products.length > 0) {
+            result = products.map((product, index) => {
+                return (
+                    <ProductItem
+                        key={index}
+                        product={product}
+                        index={index}
+                    />
+                )
+            })
+        }
+
+        return result;
+    }
+}
+
+export default ProductListPage;
