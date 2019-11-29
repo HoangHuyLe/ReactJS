@@ -1,0 +1,11 @@
+.side-bar {       
+      background-image:  url('./../../../img/sidebar.jpg');
+}
+
+.ant-layout-sider {
+      min-height: 100%;
+}
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected {
+      background-color: #00acc1;
+}

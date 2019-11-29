@@ -1,0 +1,11 @@
+.ant-card-body {      
+      padding : 0px !important;
+}
+
+.ant-card-meta-title {      
+      color: white;
+      text-align: center;
+      background: rgba(0, 21, 41, 1);
+      padding: 15px 10px 0px 10px;
+      font-size: large;
+}
