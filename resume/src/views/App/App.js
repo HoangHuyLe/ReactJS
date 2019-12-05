@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Import css
 import 'antd/dist/antd.css';
+// Import css
+import './../../assets/css/style.css';
 // Import core component 
 import SideNavigation from './../../components/SideNavigation/SideNavigation';
 import routes from './../../routes';
@@ -16,7 +18,7 @@ class App extends Component {
             <Router>
                 <Layout style={{ minHeight: '100vh' }}>
                     <SideNavigation />
-                    <Layout>
+                    <Layout style={{ marginLeft: '200px' }}>
                         <Content style={{ margin: '10px 30px' }}>
                             <Switch>
                                 {routes.map((route, index) => (
@@ -34,7 +36,7 @@ class App extends Component {
                 </Layout>
             </Router>
         );
-    }   
+    }
 }
 
 export default App;

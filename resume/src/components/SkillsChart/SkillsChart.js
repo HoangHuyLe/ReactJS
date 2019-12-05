@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// Import css
-import './../../assets/css/commons.css';
 // Import antd component
 import { Progress, Divider } from 'antd';
 
@@ -8,7 +6,7 @@ class SkillsChart extends Component {
 
       render() {
             return (
-                  <div className="container mt-10">
+                  <div className="mycontainer mt-30">
                         <div className="title-component">
                               <span>Programing Skills</span>
                         </div>

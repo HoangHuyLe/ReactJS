@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// Import css
-import './../../assets/css/commons.css';
 // Import antd component
 import { Row, Col, Divider, Button } from 'antd';
 
@@ -8,7 +6,7 @@ class PersonalInfor extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="mycontainer">
                 <div className="title-component">
                     <span>Personal Information</span>
                 </div>

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// Import css
-import './../../assets/css/commons.css';
 // Import antd component
 import { Typography, Divider } from 'antd';
 
@@ -10,7 +8,7 @@ class Aboutme extends Component {
 
       render() {
             return (
-                  <div className="container">
+                  <div className="mycontainer">
                         <div className="title-component">
                               <span>About me</span>
                         </div>

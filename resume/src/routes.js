@@ -3,6 +3,7 @@ import Overview from './views/Overview/Overview';
 import Education from './views/Education/Education';
 import Experience from './views/Experience/Experience';
 import Certification from './views/Certification/Certification';
+import Applications from './views/Applications/Applications';
 
 const routes = [
       {
@@ -17,14 +18,19 @@ const routes = [
       },
       {
             path: '/experience',
-            exact: false,
-            component: () => <Experience/>
+            exact: true,
+            component: () => <Experience />,           
       },
       {
             path: '/certification',
             exact: false,
             component: () => <Certification/>
-      }
+      },
+      {
+            path: '/experience/apps/:app',
+            exact: false,
+            component: (match) => <Applications match = {match}/>,           
+      },     
 ]
 
 export default routes;

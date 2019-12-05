@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 // Import antd component
-import { Menu } from 'antd';
+import { Menu} from 'antd';
 
 class MenuSide extends Component {
 
@@ -40,6 +40,12 @@ class MenuSide extends Component {
                     selectedItem: '1'
                 })
         }
+        // Check apps in experience
+        if(path.includes('/experience')){
+            this.setState({
+                selectedItem: '3'
+            });
+        }
     }
 
     onChangeItem = (key) => {
@@ -70,7 +76,7 @@ class MenuSide extends Component {
                             <i className="fas fa-tasks"></i>
                             <span style={{ marginLeft: "5px" }}> Experience</span>
                         </Link>
-                    </Menu.Item>
+                    </Menu.Item>                   
                     <Menu.Item key="4" style={{ fontSize: '18px' }} onClick={() => this.onChangeItem('4')}>
                         <Link to='/certification'>
                             <i className="fas fa-certificate"></i>

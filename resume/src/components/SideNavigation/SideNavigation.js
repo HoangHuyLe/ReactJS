@@ -7,7 +7,7 @@ import MenuSide from './MenuSide';
 import { Layout } from 'antd';
 import { Divider } from 'antd';
 // Import css
-import "./../../assets/css/components/SideNavigation/side-navigation.css";
+import "./../../assets/css/views/Overview/side-navigation.css";
 
 const { Sider } = Layout;
 
@@ -16,7 +16,7 @@ class SideBar extends Component {
     render() {
         return (
             <div className="side-bar">
-                <Sider collapsedWidth="0" style={{ opacity: 0.75, height: '100vh', overflow: 'auto', }} >
+                <Sider collapsedWidth="0" style={{   height: '100vh', position: 'fixed' }} >
                     <Avatar />
                     <Divider />
                     <MenuSide />

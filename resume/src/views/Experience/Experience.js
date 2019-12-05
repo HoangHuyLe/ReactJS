@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 
-// Import component 
+// Import core components
+import Products from './../../components/Products/Products';
+
 
 class Experience extends Component {
-
+    
     render() {
+        
         return (
             <React.Fragment>
-                  <h1>Experience</h1>
+                <Products match ={this.props.match}/>
             </React.Fragment>
         );
     }

@@ -1,0 +1,12 @@
+.products .ant-card{
+      font-size: 18px;
+      text-align: justify;
+}
+
+.products .title-component {
+      margin-bottom: 20px;
+}
+
+.products .ant-card-head {
+      background-color: #00acc1;
+}
