@@ -19,7 +19,7 @@ class Products extends Component {
                 <Row gutter={16}>
                     <Col span={8}>
                         <Card title="Resume" bordered={true}>
-                            <p> <b>Used technology: </b> ReactJS, React Router, Redux, Redux Saga, Fake Rest API with mockAPI, Ant Design </p>
+                            <p> <b>Used technology: </b> ReactJS, React Router, Redux, Redux Saga, Mock API with mocAPI and axios, Ant Design </p>
                             <p> <b>Source code: </b>
                                 <a href='https://github.com/HoangHuyLe/ReactJS/tree/master/resume' target="_blank" rel="noopener noreferrer">
                                     source code
@@ -30,9 +30,10 @@ class Products extends Component {
                     </Col>
                     <Col span={8}>
                         <Card title="Manage Work" bordered={true}>
-                            <p> <b>Used technology:</b> ReactJS, Redux, Bootstrap 3 </p>
+                            <p> <b>Used technology:</b> ReactJS, Redux, Redux-saga, Mock API with mockAPI and axios </p>
                             <p> <b>Description:</b> </p>
                             <ul>
+                                <li>Show loading when connect API</li>
                                 <li>Add a new work</li>
                                 <li>Edit and delete a work</li>
                                 <li>Search, Filter and Sort</li>

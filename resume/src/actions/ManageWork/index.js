@@ -1,8 +1,29 @@
 import * as types from './../../constants/ManageWork/ActionTypes';
 
-export const listAll = () => {
+export const fetchListTask = (params = {}) => {
       return {
-            type : types.LIST_ALL
+            type: types.FETCH_TASK,
+            payload: {
+                  params
+            }
+      }
+}
+
+export const fetchListTaskSuccess = data => {
+      return {
+            type: types.FETCH_TASK_SUCCESS,
+            payload:{
+                  data
+            }
+      }
+}
+
+export const fetchListTaskFailed = error =>{
+      return {
+            type: types.FETCH_TASK_FAILED,
+            payload: {
+                  error
+            }
       }
 }
 
@@ -13,9 +34,44 @@ export const saveTask = (task) => {
       }
 }
 
-export const genTask = () =>{
+export const saveTaskSuccess = (task) => {
       return {
-            type: types.GEN_TASK
+            type : types.SAVE_TASK_SUCCESS,
+            task // task : task
+      }
+}
+
+export const saveTaskFailed = (error) => {
+      return {
+            type : types.SAVE_TASK,
+            error // task : task
+      }
+}
+
+export const deleteTask = (id)=>{
+      return{
+            type : types.DELETE_TASK,
+            id : id
+      }
+}
+
+export const deleteTaskSuccess = (id)=>{
+      return{
+            type : types.DELETE_TASK_SUCCESS,
+            id : id
+      }
+}
+
+export const deleteTaskFailed = (error)=>{
+      return{
+            type : types.DELETE_TASK_FAILED,
+            error
+      }
+}
+
+export const listAll = () => {
+      return {
+            type : types.LIST_ALL
       }
 }
 
@@ -41,13 +97,6 @@ export const openForm = () =>{
 export const updateStatus = (id)=>{
       return{
             type : types.UPDATE_STATUS_TASK,
-            id : id
-      }
-}
-
-export const deleteTask = (id)=>{
-      return{
-            type : types.DELETE_TASK,
             id : id
       }
 }

@@ -1,41 +1,5 @@
 import * as types from '../../constants/ManageWork/ActionTypes';
 
-var s4 = () => {
-      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-}
-
-var generateID = () => {
-      return s4() + s4() + s4() + s4();
-};
-
-var data = [
-      {
-            id: generateID(),
-            name: 'Hoc Lap Trinh',
-            status: true,
-      },
-      {
-            id: generateID(),
-            name: 'Hoc HTML',
-            status: true,
-      },
-      {
-            id: generateID(),
-            name: 'Hoc CSS',
-            status: false,
-      },
-      {
-            id: generateID(),
-            name: 'Thuc hanh HTML',
-            status: false,
-      },
-      {
-            id: generateID(),
-            name: 'Thuc hanh CSS',
-            status: true,
-      }
-];
-
 var findIndex = (id, tasks) => {
       var result = -1;
       tasks.forEach((task, index) => {
@@ -47,35 +11,53 @@ var findIndex = (id, tasks) => {
       return result;
 }
 
-var inintialState = [
-
-];
+var inintialState = [];
 
 var tasksReducer = (state = inintialState, action) => {
       let index = -1;
       switch (action.type) {
+            case types.FETCH_TASK:
+                  return [...state];
+            case types.FETCH_TASK_SUCCESS:
+                  console.log(action.payload.data);
+                  state = action.payload.data;
+                  return [...state];
+            case types.FETCH_TASK_FAILED:
+                  return [...state];
             case types.LIST_ALL:
-                  return state;
+                  return [...state];
             case types.SAVE_TASK:
+                  return [...state];
+            case types.SAVE_TASK_SUCCESS:
                   // 2 case: Add task and Editting task                  
                   var task = {
                         id: action.task.id,
                         name: action.task.name,
                         status: action.task.status
                   }
-                  // case Add task
-                  if(task.id === ''){
-                        task.id = generateID();
+                  index = findIndex(task.id, state);
+                  // case Add task                  
+                  if (index === -1) {
                         state.push(task);
                   }
                   // case Editting
                   else {
-                        index = findIndex(task.id, state);
                         state[index] = task;
                   }
                   return [...state];
-            case types.GEN_TASK:
-                  state = data;
+            case types.SAVE_TASK_FAILED:
+                  console.log(action.error);
+                  return [...state];
+            case types.DELETE_TASK:                  
+                  return [...state];
+            case types.DELETE_TASK_SUCCESS:
+                  index = findIndex(action.id, state);
+                  if (index !== -1) {
+                        state.splice(index, 1); // index: start position, 1: number elem delete                      
+                  }
+                  return [...state];
+            case types.DELETE_TASK_FAILED:
+                  console.log(action.error);
                   return [...state];
             case types.UPDATE_STATUS_TASK:
                   index = findIndex(action.id, state);
@@ -86,12 +68,7 @@ var tasksReducer = (state = inintialState, action) => {
                         }
                   }
                   return [...state];
-            case types.DELETE_TASK:
-                  index = findIndex(action.id, state);
-                  if (index !== -1) {
-                        state.splice(index, 1); // index: start position, 1: number elem delete                      
-                  }
-                  return [...state];
+
             default:
                   return state;
       }
@@ -99,3 +76,40 @@ var tasksReducer = (state = inintialState, action) => {
 }
 
 export default tasksReducer;
+
+
+// var s4 = () => {
+//       return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+// };
+
+// var generateID = () => {
+//       return s4() + s4() + s4() + s4();
+// };
+
+// var data = [
+//       {
+//             id: generateID(),
+//             name: 'Hoc Lap Trinh',
+//             status: true,
+//       },
+//       {
+//             id: generateID(),
+//             name: 'Hoc HTML',
+//             status: true,
+//       },
+//       {
+//             id: generateID(),
+//             name: 'Hoc CSS',
+//             status: false,
+//       },
+//       {
+//             id: generateID(),
+//             name: 'Thuc hanh HTML',
+//             status: false,
+//       },
+//       {
+//             id: generateID(),
+//             name: 'Thuc hanh CSS',
+//             status: true,
+//       }
+// ];

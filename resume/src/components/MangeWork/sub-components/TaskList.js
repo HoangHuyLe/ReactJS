@@ -13,6 +13,10 @@ class TaskList extends React.Component {
         };
     }
 
+    componentDidMount(){
+        this.props.fetchListTask();
+    }
+
     onChange = (event) => {
         var name = event.target.name;
         var value = event.target.value;
@@ -21,7 +25,6 @@ class TaskList extends React.Component {
             status: name === "filterStatus" ? value : this.state.filterStatus
         }
         this.props.onFilterTable(filter);
-
         this.setState({
             [name]: value
         });
@@ -29,17 +32,13 @@ class TaskList extends React.Component {
     }
 
     render() {
-
         var { tasks, filterTable, searchTask, isShowList, sort } = this.props;
-
         // Search
         if (searchTask !== "") {
             tasks = tasks.filter((task) => {
                 return task.name.toLowerCase().indexOf(searchTask.toLowerCase()) !== -1; // hàm indexOf sẽ trả về -1 nếu không tìm thấy
             })
         }
-
-
         // Filter on table
         if (filterTable) {
             if (filterTable.name) {
@@ -56,7 +55,6 @@ class TaskList extends React.Component {
                 }
             })
         }
-
         // Sort
         if (sort.by === 'name') {
             tasks.sort((a, b) => {
@@ -77,12 +75,10 @@ class TaskList extends React.Component {
                 })
             }
         }
-
         // Show list
         if (isShowList) {
             tasks = this.props.tasks;
         }
-
         var elemTasks = tasks.map((task, index) => {
             return <TaskItem
                 key={task.id}
@@ -90,7 +86,6 @@ class TaskList extends React.Component {
                 task={task}
             />
         })
-
         return (
             <div>
                 <div className="row mt-20">
@@ -157,6 +152,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         onShowList: (value) => {
             dispatch(actions.showList(value))
+        },
+        fetchListTask: () =>{
+            dispatch(actions.fetchListTask())
         }
     }
 }

@@ -15,6 +15,25 @@
       margin-top: 5px;
 }
 
+.product-image {
+      height: 100px;
+}
+
+.global-loading {
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      z-index: 99;
+      background-color: rgba(0, 0, 0, 0.4) !important;      
+      display: flex;
+}
+
+.global-loading img {
+      height: 100px;
+      width: 100px;
+      margin: auto;
+}
+
 .mt-30 {
       margin-top: 30px;
 }
@@ -45,8 +64,4 @@
 
 .text-center {
       text-align: center;
-}
-
-.product-image {
-    height: 100px;  
 }
