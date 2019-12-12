@@ -22,3 +22,8 @@ export const addTask = data => {
 export const deleteTask = taskId => {
       return axiosService.delete(`${API_ENDPOINT}/${url}/${taskId}`);
 };
+
+// http://5dee0f0bb3d17b00146a2109.mockapi.io/api/tasks/:id METHOD: PUT
+export const updateTask = (taskId, data) => {
+      return axiosService.put(`${API_ENDPOINT}/${url}/${taskId}`, data);
+};

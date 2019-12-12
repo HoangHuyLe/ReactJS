@@ -77,7 +77,6 @@ class TaskForm extends React.Component {
       render() {                
             if (!this.props.isDisplayForm) return "";
             return (
-
                   <div className="panel panel-danger">
                         <div className="panel-heading">
 

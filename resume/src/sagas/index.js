@@ -1,19 +1,21 @@
-import { fork,call, put, take, delay, takeEvery } from 'redux-saga/effects';
-import { getListTask, addTask, deleteTask } from '../apis/tasks';
+import { fork, call, put, take, delay, takeEvery } from 'redux-saga/effects';
+import { getListTask, addTask, deleteTask, updateTask } from '../apis/tasks';
 import * as ManageWorkTypes from './../constants/ManageWork/ActionTypes';
-import { 
-    fetchListTaskSuccess, 
+import {
+    fetchListTaskSuccess,
     fetchListTaskFailed,
     saveTaskSuccess,
     saveTaskFailed,
     deleteTaskSuccess,
-    deleteTaskFailed
+    deleteTaskFailed,
+    updateStatusSuccess,
+    updateStatusFailed
 } from './../actions/ManageWork/index';
-import {STATUS_CODE} from './../constants/index';
+import { STATUS_CODE } from './../constants/index';
 import { showLoading, hideLoading } from '../actions/loading';
 
 function* watchFetchListTaskAction() {
-    while(true){
+    while (true) {
         const action = yield take(ManageWorkTypes.FETCH_TASK); // Khi FETCH_TASK được dispatch => code phía sau dòng lệnh này mới chạy được.
         const { params } = action.payload;
         yield put(showLoading());
@@ -29,39 +31,96 @@ function* watchFetchListTaskAction() {
     }
 }
 
-function* addTaskSaga(action){
+function* saveTaskSaga(action) {
     yield put(showLoading());
-    const {task} = action;
-    const resp = yield call(addTask, {
-        name: task.name,
-        status: task.status
-    });
-    if (resp.status === STATUS_CODE.CREATED){
+    const { task } = action;
+    // 2 case: add task and edit task
+    // Add task
+    if (task.id === '') {
+        yield addTaskSaga(task);
+    }
+    // edit task
+    else {
+        yield updateTaskSaga(task);
+    }
+
+    yield put(hideLoading());
+}
+
+function* addTaskSaga(task) {
+    const resp = yield call(addTask,
+        {
+            name: task.name,
+            status: task.status
+        }
+    );
+    if (resp.status === STATUS_CODE.CREATED) {
         yield put(saveTaskSuccess(resp.data))
     }
     else {
         yield put(saveTaskFailed(resp.data))
     }
-    yield put(hideLoading());
 }
 
-function* deleteTaskSaga(action){
+function* updateTaskSaga(task) {
+    const resp = yield call(updateTask, task.id,
+        {
+            name: task.name,
+            status: task.status
+        }
+    );
+    if (resp.status === STATUS_CODE.SUCCESS) {
+        yield put(saveTaskSuccess(resp.data))
+    }
+    else {
+        yield put(saveTaskFailed(resp.data))
+    }
+}
+
+
+function* deleteTaskSaga(action) {
     console.log(action);
     yield put(showLoading());
-    const {id} = action;
+    const { id } = action;
     const resp = yield call(deleteTask, id);
     console.log(resp)
-    if(resp.status === STATUS_CODE.SUCCESS){
+    if (resp.status === STATUS_CODE.SUCCESS) {
         yield put(deleteTaskSuccess(resp.data.id));
     }
-    else{
+    else {
         yield put(deleteTaskFailed(resp.data));
     };
     yield put(hideLoading());
 }
 
+function* updateStatusTaskSaga(action) {
+    console.log(action);
+    yield put(showLoading());
+    const { task } = action;
+    const resp = yield call(updateTask, task.id, {status:!task.status});
+    console.log(resp)
+    if (resp.status === STATUS_CODE.SUCCESS) {
+        yield put(updateStatusSuccess(resp.data.id));
+    }
+    else {
+        yield put(updateStatusFailed(resp.data));
+    };
+    yield put(hideLoading());
+}
+
+// function* filterTaskSaga({ payload }) {
+//     yield delay(500);
+//     const { keyword } = payload;
+//     yield put(
+//         fetchListTask({
+//             q: keyword,
+//         }),
+//     );
+// }
+
 export default function* rootSaga() {
     yield fork(watchFetchListTaskAction);
-    yield takeEvery(ManageWorkTypes.SAVE_TASK, addTaskSaga); // acdTask sẽ nhận được kết quả trả về của action SAVE_TASK
-    yield takeEvery(ManageWorkTypes.DELETE_TASK, deleteTaskSaga)
+    yield takeEvery(ManageWorkTypes.SAVE_TASK, saveTaskSaga); // saveTaskSaga sẽ nhận được kết quả trả về của action SAVE_TASK
+    yield takeEvery(ManageWorkTypes.DELETE_TASK, deleteTaskSaga);
+    yield takeEvery(ManageWorkTypes.UPDATE_STATUS_TASK, updateStatusTaskSaga);
 }

@@ -13,7 +13,6 @@ var itemEditting = (state = inintialState, action) => {
             default:
                   return state;
       }
-
 }
 
 export default itemEditting;

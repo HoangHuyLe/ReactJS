@@ -5,7 +5,7 @@ import * as actions from './../../../actions/ManageWork/index';
 class TaskItem extends React.Component {
 
     onUpdateStatus = () => {
-        this.props.onUpdateStatus(this.props.task.id);
+        this.props.onUpdateStatus(this.props.task);
     }
 
     onDelete = () => {

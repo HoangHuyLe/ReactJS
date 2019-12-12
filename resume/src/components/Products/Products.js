@@ -35,9 +35,9 @@ class Products extends Component {
                             <ul>
                                 <li>Show loading when connect API</li>
                                 <li>Add a new work</li>
+                                <li>Update status work</li>
                                 <li>Edit and delete a work</li>
-                                <li>Search, Filter and Sort</li>
-                                <li>Generate example</li>
+                                <li>Search, Filter and Sort</li>                                
                             </ul>
                             <p> <b>Source code: </b>
                                 <a href='https://github.com/HoangHuyLe/ReactJS/tree/master/manage-work_redux' target="_blank" rel="noopener noreferrer">

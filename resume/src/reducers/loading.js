@@ -1,6 +1,6 @@
 import {SHOW_LOADING, HIDE_LOADING} from '../constants/index';
 
-const innitialState = false;
+var innitialState = false;
 
 const loading = (state=innitialState, action)=>{
       switch (action.type){

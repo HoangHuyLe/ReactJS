@@ -19,7 +19,6 @@ var tasksReducer = (state = inintialState, action) => {
             case types.FETCH_TASK:
                   return [...state];
             case types.FETCH_TASK_SUCCESS:
-                  console.log(action.payload.data);
                   state = action.payload.data;
                   return [...state];
             case types.FETCH_TASK_FAILED:
@@ -48,7 +47,7 @@ var tasksReducer = (state = inintialState, action) => {
             case types.SAVE_TASK_FAILED:
                   console.log(action.error);
                   return [...state];
-            case types.DELETE_TASK:                  
+            case types.DELETE_TASK:
                   return [...state];
             case types.DELETE_TASK_SUCCESS:
                   index = findIndex(action.id, state);
@@ -59,7 +58,9 @@ var tasksReducer = (state = inintialState, action) => {
             case types.DELETE_TASK_FAILED:
                   console.log(action.error);
                   return [...state];
-            case types.UPDATE_STATUS_TASK:
+            case types.UPDATE_STATUS_TASK:                  
+                  return [...state];
+            case types.UPDATE_STATUS_TASK_SUCCESS:
                   index = findIndex(action.id, state);
                   if (index !== -1) {
                         state[index] = {
@@ -68,7 +69,9 @@ var tasksReducer = (state = inintialState, action) => {
                         }
                   }
                   return [...state];
-
+            case types.UPDATE_STATUS_TASK_FAILED:
+                  console.log(action.error);
+                  return [...state];
             default:
                   return state;
       }
@@ -85,31 +88,3 @@ export default tasksReducer;
 // var generateID = () => {
 //       return s4() + s4() + s4() + s4();
 // };
-
-// var data = [
-//       {
-//             id: generateID(),
-//             name: 'Hoc Lap Trinh',
-//             status: true,
-//       },
-//       {
-//             id: generateID(),
-//             name: 'Hoc HTML',
-//             status: true,
-//       },
-//       {
-//             id: generateID(),
-//             name: 'Hoc CSS',
-//             status: false,
-//       },
-//       {
-//             id: generateID(),
-//             name: 'Thuc hanh HTML',
-//             status: false,
-//       },
-//       {
-//             id: generateID(),
-//             name: 'Thuc hanh CSS',
-//             status: true,
-//       }
-// ];

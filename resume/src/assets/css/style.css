@@ -24,7 +24,7 @@
       height: 100%;
       width: 100%;
       z-index: 99;
-      background-color: rgba(0, 0, 0, 0.4) !important;      
+      background-color: rgba(0, 0, 0, 0.4) !important;
       display: flex;
 }
 
@@ -64,4 +64,8 @@
 
 .text-center {
       text-align: center;
+}
+
+.float-right {
+      float: right;
 }
