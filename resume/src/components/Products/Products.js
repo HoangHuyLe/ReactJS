@@ -44,7 +44,7 @@ class Products extends Component {
                                     source code
                                 </a>
                             </p>
-                            <p> <Link to="/experience/apps/manage-work">Show App</Link></p>
+                            <p> <Link to="/experience/apps/manage-work" >Show App</Link></p>
                         </Card>
                     </Col>
                     <Col span={8}>

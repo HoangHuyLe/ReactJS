@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
 
-class LoginBar extends Component {
+class User extends Component {
       render() {
             return (
                   <div>
@@ -12,4 +12,4 @@ class LoginBar extends Component {
       }
 }
 
-export default LoginBar;
+export default User;

@@ -1,5 +1,6 @@
 import { fork, call, put, take, delay, takeEvery } from 'redux-saga/effects';
 import { getListTask, addTask, deleteTask, updateTask } from '../apis/tasks';
+import {getAccount} from './../apis/accounts';
 import * as ManageWorkTypes from './../constants/ManageWork/ActionTypes';
 import {
     fetchListTaskSuccess,
@@ -11,7 +12,10 @@ import {
     updateStatusSuccess,
     updateStatusFailed
 } from './../actions/ManageWork/index';
-import { STATUS_CODE } from './../constants/index';
+import { 
+    STATUS_CODE,
+    AUTHENTICATE 
+} from './../constants/index';
 import { showLoading, hideLoading } from '../actions/loading';
 
 function* watchFetchListTaskAction() {
@@ -108,19 +112,23 @@ function* updateStatusTaskSaga(action) {
     yield put(hideLoading());
 }
 
-// function* filterTaskSaga({ payload }) {
-//     yield delay(500);
-//     const { keyword } = payload;
-//     yield put(
-//         fetchListTask({
-//             q: keyword,
-//         }),
-//     );
-// }
+function* authenticateSaga(action){
+    console.log(action)
+    const {user} = action
+    yield delay(500);
+    yield put(showLoading());
+    const resp = yield put (getAccount({
+        username: user.username,
+        password: user.password
+    }));
+    console.log(resp);
+    yield put(hideLoading());
+}
 
 export default function* rootSaga() {
     yield fork(watchFetchListTaskAction);
     yield takeEvery(ManageWorkTypes.SAVE_TASK, saveTaskSaga); // saveTaskSaga sẽ nhận được kết quả trả về của action SAVE_TASK
     yield takeEvery(ManageWorkTypes.DELETE_TASK, deleteTaskSaga);
     yield takeEvery(ManageWorkTypes.UPDATE_STATUS_TASK, updateStatusTaskSaga);
+    yield takeEvery(AUTHENTICATE, authenticateSaga)
 }

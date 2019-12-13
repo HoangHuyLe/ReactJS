@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
 // Import core components
 import ManageWork from './../../components/MangeWork/ManageWork';
 import PurchaseMobile from '../../components/PurchaseMobile/PurchaseMobile';
-import LoginBar from '../../components/Login/LoginBar';
-import LoginForm from './../../components/Login/LoginForm';
 // Import antd components
 import { Button, Icon } from 'antd';
 import { Row, Col } from 'antd';
 
 class Applications extends Component {
-
+    isLogin = false;
     render() {
         let match = this.props.match.match;
-
         return (
             <React.Fragment>
                 <Row>
@@ -24,14 +21,22 @@ class Applications extends Component {
                         </Button>
                     </Col>
                     <Col span={8} offset={8}>
-                        <LoginBar />
+                        Account
                     </Col>
-                </Row>                
+                </Row>
                 <br />
-                <LoginForm />
-                {/* {this.showApp(match.params.app)} */}
+                {this.authenticate(match.params.app)}
             </React.Fragment>
         );
+    }
+
+    authenticate = (app) => {
+        if (this.isLogin) {
+            return this.showApp(app)
+        }
+        else {
+            return <Redirect to="/experience/apps/login" />
+        }
     }
 
     showApp = (app) => {
