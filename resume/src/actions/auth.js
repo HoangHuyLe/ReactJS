@@ -12,10 +12,10 @@ export const authenticate = (user) =>{
       }
 }
 
-export const authenticateSuccess= (username) =>{
+export const authenticateSuccess= (user) =>{
       return {
             type: AUTHENTICATE_SUCCESS,
-            username
+            user
       }
 }
 

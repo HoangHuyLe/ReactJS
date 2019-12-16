@@ -3,14 +3,16 @@ import { Link, Redirect} from 'react-router-dom';
 // Import core components
 import ManageWork from './../../components/MangeWork/ManageWork';
 import PurchaseMobile from '../../components/PurchaseMobile/PurchaseMobile';
+import UserBar from './../../components/Authentication/UserBar';
 // Import antd components
 import { Button, Icon } from 'antd';
 import { Row, Col } from 'antd';
 
+import {connect } from 'react-redux';
+
 class Applications extends Component {
-    isLogin = false;
     render() {
-        let match = this.props.match.match;
+        let match = this.props.match;
         return (
             <React.Fragment>
                 <Row>
@@ -21,7 +23,7 @@ class Applications extends Component {
                         </Button>
                     </Col>
                     <Col span={8} offset={8}>
-                        Account
+                        <UserBar match={match}/>
                     </Col>
                 </Row>
                 <br />
@@ -31,11 +33,11 @@ class Applications extends Component {
     }
 
     authenticate = (app) => {
-        if (this.isLogin) {
+        if (this.props.isAuthenticated) {
             return this.showApp(app)
         }
         else {
-            return <Redirect to="/experience/apps/login" />
+            return <Redirect to={`/experience/apps/${app}/login`} />
         }
     }
 
@@ -51,4 +53,10 @@ class Applications extends Component {
     }
 }
 
-export default Applications;
+const mapStateToProps = state =>{
+    return {
+        isAuthenticated : state.auth.isAuthenticated
+    }
+}
+
+export default connect(mapStateToProps,null)(Applications);

@@ -4,6 +4,7 @@ import {
       AUTHENTICATE_FAILED,
       SIGN_OUT
 } from '../constants/index';
+import { toastError} from './../helpers/toastHelper';
 
 var initialState = {
       isAuthenticated: false,
@@ -12,20 +13,19 @@ var initialState = {
 
 const auth = (state = initialState, action) => {
       switch (action.type) {
-            case AUTHENTICATE:
-                  console.log(action)
+            case AUTHENTICATE:                  
                   return state;
-            case AUTHENTICATE_SUCCESS:
+            case AUTHENTICATE_SUCCESS:                  
                   state = {
                         isAuthenticated: true,
-                        username: action.username
-                  };
+                        username: action.user.username
+                  };                  
                   return state;
             case AUTHENTICATE_FAILED:
-                  console.log(action.error);
+                  toastError("Username or Password not correct!");                  
                   return state;
-            case SIGN_OUT:
-                  return state;
+            case SIGN_OUT:                  
+                  return initialState;
             default:
                   return state;
       }

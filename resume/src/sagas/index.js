@@ -1,4 +1,4 @@
-import { fork, call, put, take, delay, takeEvery } from 'redux-saga/effects';
+import { fork, call, put, take, delay, takeEvery, takeLatest } from 'redux-saga/effects';
 import { getListTask, addTask, deleteTask, updateTask } from '../apis/tasks';
 import {getAccount} from './../apis/accounts';
 import * as ManageWorkTypes from './../constants/ManageWork/ActionTypes';
@@ -12,11 +12,13 @@ import {
     updateStatusSuccess,
     updateStatusFailed
 } from './../actions/ManageWork/index';
+import { showLoading, hideLoading } from '../actions/loading';
+import {authenticateSuccess,authenticateFailed} from './../actions/auth';
 import { 
     STATUS_CODE,
-    AUTHENTICATE 
+    AUTHENTICATE
 } from './../constants/index';
-import { showLoading, hideLoading } from '../actions/loading';
+
 
 function* watchFetchListTaskAction() {
     while (true) {
@@ -83,11 +85,9 @@ function* updateTaskSaga(task) {
 
 
 function* deleteTaskSaga(action) {
-    console.log(action);
     yield put(showLoading());
     const { id } = action;
     const resp = yield call(deleteTask, id);
-    console.log(resp)
     if (resp.status === STATUS_CODE.SUCCESS) {
         yield put(deleteTaskSuccess(resp.data.id));
     }
@@ -98,11 +98,9 @@ function* deleteTaskSaga(action) {
 }
 
 function* updateStatusTaskSaga(action) {
-    console.log(action);
     yield put(showLoading());
     const { task } = action;
     const resp = yield call(updateTask, task.id, {status:!task.status});
-    console.log(resp)
     if (resp.status === STATUS_CODE.SUCCESS) {
         yield put(updateStatusSuccess(resp.data.id));
     }
@@ -112,23 +110,31 @@ function* updateStatusTaskSaga(action) {
     yield put(hideLoading());
 }
 
-function* authenticateSaga(action){
-    console.log(action)
-    const {user} = action
-    yield delay(500);
+function* authenticateSaga(action){    
+    const {user} = action;
     yield put(showLoading());
-    const resp = yield put (getAccount({
+    const resp = yield call(getAccount, {
         username: user.username,
-        password: user.password
-    }));
-    console.log(resp);
+    });
+    if(resp.data.length === 1){ // Kiểm tra đúng với 1 username duy nhất
+        if(user.password === resp.data[0].password){ // Kiếm tra đúng password
+            yield put(authenticateSuccess(resp.data[0]));
+        }
+        else {        
+            yield put(authenticateFailed(resp.data[0]));
+        }        
+    }
+    else {        
+        yield put(authenticateFailed(resp.data[0]));
+    }
     yield put(hideLoading());
 }
+
 
 export default function* rootSaga() {
     yield fork(watchFetchListTaskAction);
     yield takeEvery(ManageWorkTypes.SAVE_TASK, saveTaskSaga); // saveTaskSaga sẽ nhận được kết quả trả về của action SAVE_TASK
     yield takeEvery(ManageWorkTypes.DELETE_TASK, deleteTaskSaga);
     yield takeEvery(ManageWorkTypes.UPDATE_STATUS_TASK, updateStatusTaskSaga);
-    yield takeEvery(AUTHENTICATE, authenticateSaga)
+    yield takeLatest(AUTHENTICATE,authenticateSaga);
 }

@@ -1,4 +1,4 @@
-import qs from 'query-string';
+// import qs from 'query-string';
 import axiosService from './axiosService';
 import {API_ENDPOINT} from '../constants/index'
 
@@ -8,9 +8,8 @@ const url = 'accounts'
 export const getAccount = (params = {}) => {
       let queryParams = '';
       if (Object.keys(params).length > 0) {
-            queryParams = `?${qs.stringify(params)}`;
-      }
-      console.log(queryParams);
+            queryParams = `?search=${params.username}`;
+      }      
       return axiosService.get(`${API_ENDPOINT}/${url}${queryParams}`);
 };
 

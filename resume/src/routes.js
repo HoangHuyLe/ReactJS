@@ -28,14 +28,14 @@ const routes = [
             component: () => <Certification />,
       },
       {
-            path: '/experience/apps/login',
+            path: '/experience/apps/:app/login',
             exact: true,
-            component: () => <AuthContainer />
+            component: ({match,history}) => <AuthContainer match ={match} history={history}/>
       },
       {
             path: '/experience/apps/:app',
             exact: false,
-            component: (match) => <Applications match={match} />,
+            component: ({match, history}) => <Applications match={match} history={history}/>,
       },
 ]
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 // Import antd component
-import { Menu} from 'antd';
+import { Menu } from 'antd';
 
 class MenuSide extends Component {
 
@@ -10,6 +10,27 @@ class MenuSide extends Component {
         this.state = {
             selectedItem: ''
         }
+    }
+
+    componentDidUpdate() {
+        let path = this.props.location.pathname;
+        switch (path) {
+            case '/':
+                if (this.state.selectedItem !== '1') {
+                    this.setState({
+                        selectedItem: '1'
+                    });
+                }
+                break;
+            case '/education':
+                if (this.state.selectedItem !== '2') {
+                    this.setState({
+                        selectedItem: '2'
+                    });
+                }
+                break;            
+            default:                
+        }        
     }
 
     componentDidMount() {
@@ -41,7 +62,7 @@ class MenuSide extends Component {
                 })
         }
         // Check apps in experience
-        if(path.includes('/experience')){
+        if (path.includes('/experience')) {
             this.setState({
                 selectedItem: '3'
             });
@@ -76,7 +97,7 @@ class MenuSide extends Component {
                             <i className="fas fa-tasks"></i>
                             <span style={{ marginLeft: "5px" }}> Experience</span>
                         </Link>
-                    </Menu.Item>                   
+                    </Menu.Item>
                     <Menu.Item key="4" style={{ fontSize: '18px' }} onClick={() => this.onChangeItem('4')}>
                         <Link to='/certification'>
                             <i className="fas fa-certificate"></i>

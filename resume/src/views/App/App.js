@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import routes from './../../routes';
 import configureStore from '../../redux/configureStore';
+import { ToastContainer } from 'react-toastify';
 // Import css
 import 'antd/dist/antd.css';
-// Import css
+import 'react-toastify/dist/ReactToastify.css';
 import './../../assets/css/style.css';
 // Import core component 
 import SideNavigation from './../../components/SideNavigation/SideNavigation';
@@ -23,7 +24,8 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <Router>
-                    <GlobalLoading/>
+                    <ToastContainer position="top-right" autoClose={2000}/>
+                    <GlobalLoading />
                     <Layout style={{ minHeight: '100vh' }}>
                         <SideNavigation />
                         <Layout style={{ marginLeft: '200px' }}>

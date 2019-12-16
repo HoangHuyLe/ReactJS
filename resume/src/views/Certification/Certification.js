@@ -7,7 +7,8 @@ class Certification extends Component {
     render() {
         return (
             <React.Fragment>
-                  <h1>Certification</h1>
+                  <h3>University Graduation Certificate: expected 11/2020</h3>
+                  <h3>English Certificate: expected 01/2020</h3>
             </React.Fragment>
         );
     }
